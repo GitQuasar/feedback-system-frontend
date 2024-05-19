@@ -10,6 +10,8 @@ const router = useRouter()
 
 const link_uuid = ref(localStorage.getItem('link_info'))
 
+const QR_image = ref(localStorage.getItem('QR_base64'))
+
 const confirm = () => {
   showModal.value = false
   router.push({ name: 'Review', params: { uuid: link_uuid.value } })
@@ -50,7 +52,7 @@ const cancel = () => {
     <div
       class="bg-[#FAFBFC] w-[384px] h-[350px] border border-dashed border-black ml-[15px] my-[30px]"
     >
-      <img src="/qr.svg" alt="qr" class="w-[343px] h-[343px] ml-[19px]" />
+      <img v-bind:src="'data:image/png;base64,' + QR_image" alt="qr" class="w-[400px] h-[349px]" />
     </div>
     <p class="underline text-[24px] mb-2 text-center">http://localhost:5173/{{ link_uuid }}</p>
   </div>

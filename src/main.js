@@ -11,6 +11,7 @@ import Manager from './pages/Manager.vue'
 import Administrator from './pages/Administrator.vue'
 import Update_Staff from './pages/Update_Staff.vue'
 import See_Review from './pages/See_Review.vue'
+import Add_Staff from './pages/Add_Staff.vue'
 
 const app = createApp(App)
 
@@ -36,7 +37,8 @@ const routes = [
     path: '/:uuid',
     components: { default: uuid_user },
     props: { default: true }
-  }
+  },
+  { path: '/administrator/add_staff', name: 'Add_staff', component: Add_Staff }
 ]
 
 const router = createRouter({

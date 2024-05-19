@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 
 import axios from 'axios'
 import Header from '../components/Header.vue'
+import Footer from '../components/Footer.vue'
 import FLName from '../components/FLName.vue'
 import Staff_table from '../components/Staff_table.vue'
 
@@ -30,12 +31,15 @@ const items = ref([])
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get('http://127.0.0.1:8000/api/admin/actions/read_staff', {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+    const { data } = await axios.get(
+      'http://127.0.0.1:8000/api/admin/actions/read_staff?is_admin=true&is_manager=false',
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
       }
-    })
+    )
     items.value = data
   } catch (err) {
     console.log(err)
@@ -60,6 +64,16 @@ onMounted(async () => {
     :admin="item.is_admin"
     :manager="item.is_manager"
   />
+  <div class="flex justify-center p-5">
+    <router-link to="/administrator/add_staff">
+      <button
+        class="bg-[#37383C] border-solid border-2 border-[#37383C] rounded-lg px-5 py-2 text-[#D0DAFC] transition hover:-translate-y-1 hover:shadow-xl"
+      >
+        Добавить сотрудника
+      </button>
+    </router-link>
+  </div>
+  <Footer />
 </template>
 
 <style scoped></style>

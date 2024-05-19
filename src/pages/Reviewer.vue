@@ -61,6 +61,7 @@ const send_rewiew = async () => {
       }
     )
     localStorage.setItem('link_info', link_uuid.value.data.review_uuid)
+    localStorage.setItem('QR_base64', link_uuid.value.data.image_base64_bytes)
   } catch (err) {
     console.log(err)
   } finally {
