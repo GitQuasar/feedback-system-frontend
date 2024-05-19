@@ -1,5 +1,6 @@
 <script setup>
-import { ref, provide, onMounted } from 'vue'
+import { ref, provide, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 import Header from '../components/Header.vue'
@@ -11,7 +12,7 @@ import Review_page from '../components/Review_page.vue'
 import Paginate from 'vuejs-paginate-next'
 
 const reviewOpen = ref(false)
-
+const router = useRouter()
 const openReview = () => {
   reviewOpen.value = true
 }
@@ -59,7 +60,9 @@ onMounted(async () => {
         }
       }
     )
-    items.value = data
+    localStorage.setItem('reviews', JSON.stringify(data))
+    pagination_items_total.value = JSON.parse(localStorage.getItem('reviews')).length
+    changePage(page.value)
   } catch (err) {
     console.log(err)
   }
@@ -86,9 +89,33 @@ onMounted(async () => {
   }
 })
 
-const rows = ref(3)
-const perPage = ref(1)
-const currentPage = ref(2)
+const page = ref(1)
+const pagination_items_on_page = ref(6)
+const pagination_offset = ref(0)
+const pagination_items_total = ref()
+const changePage = async (page_num) => {
+  try {
+    page.value = page_num
+    pagination_offset.value =
+      pagination_items_on_page.value * page_num - pagination_items_on_page.value
+    if (page_num === 1) {
+      router.push('/manager')
+    } else {
+      router.push('/manager?page=' + page_num)
+    }
+    items.value = JSON.parse(localStorage.getItem('reviews')).slice(
+      pagination_offset.value,
+      pagination_items_on_page.value * page.value
+    )
+    window.scroll(0, 0)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const pagesCount = computed(() => {
+  return Math.ceil(pagination_items_total.value / pagination_items_on_page.value)
+})
 </script>
 
 <template>
@@ -112,18 +139,40 @@ const currentPage = ref(2)
     @open-review="openReview"
   />
   <Paginate
-    v-model="currentPage"
-    :page-count="rows"
-    :page-range="perPage"
+    v-model="page"
+    :page-count="pagesCount"
+    :page-range="3"
     :margin-pages="2"
-    :click-handler="() => {}"
-    :prev-text="'Назад'"
-    :next-text="'Вперед'"
-    :container-class="'pagination'"
+    :click-handler="changePage"
+    :prev-text="'<'"
+    :next-text="'>'"
+    :container-class="'pagination flex justify-contect-center flex-wrap'"
     :page-class="'page-item'"
   />
 
   <Footer />
 </template>
 
-<style></style>
+<style>
+.pagination {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.page-item {
+  border-width: 1px;
+  border-color: rgba(120, 122, 125, 1);
+  background: rgba(229, 236, 255, 1);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  cursor: pointer;
+}
+.page-item:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</style>

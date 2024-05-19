@@ -60,7 +60,7 @@ const send_rewiew = async () => {
         }
       }
     )
-    localStorage.setItem('link_info', link_uuid.value.data)
+    localStorage.setItem('link_info', link_uuid.value.data.review_uuid)
   } catch (err) {
     console.log(err)
   } finally {
