@@ -13,13 +13,16 @@ const checked = ref(false)
 const images = ref([])
 const containerHeight = ref(375) // начальная высота контейнера
 const containerHeight1 = ref(444)
+const up_images = new FormData()
 const handleFileInputChange = (event) => {
   const files = event.target.files
 
   for (let i = 0; i < files.length; i++) {
+    up_images.append('file', files[i])
     const reader = new FileReader()
     reader.onload = () => {
       // Устанавливаем миниатюру и увеличиваем высоту контейнера
+
       images.value.push(reader.result)
     }
     reader.readAsDataURL(files[i])
@@ -39,16 +42,15 @@ const email = ref('')
 const department = ref('')
 const link_uuid = ref('')
 const router = useRouter()
-
 const send_rewiew = async () => {
-  const reviewData = {
-    review_text: `${review_text.value}`,
-    email: `${email.value}`,
-    first_name: `${firstname.value}`,
-    last_name: `${lastname.value}`,
-    patronymic: `${patronymic.value}`,
-    department: `${department.value}`
-  }
+  const reviewData = new FormData()
+  reviewData.append('review_text', review_text.value)
+  reviewData.append('email', email.value)
+  reviewData.append('first_name', firstname.value)
+  reviewData.append('last_name', lastname.value)
+  reviewData.append('patronymic', patronymic.value)
+  reviewData.append('department', department.value)
+  up_images.forEach((value) => reviewData.append('files_upload', value))
   try {
     link_uuid.value = await axios.post(
       'http://127.0.0.1:8000/api/reviews/actions/create_review',
@@ -56,7 +58,7 @@ const send_rewiew = async () => {
       {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'multipart/form-data'
         }
       }
     )
