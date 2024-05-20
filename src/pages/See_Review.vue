@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { DateTime } from 'luxon'
 import Header_Review from '../components/Header_Review.vue'
 import Footer from '../components/Footer.vue'
 import axios from 'axios'
@@ -34,6 +35,11 @@ function status(rev_stat) {
     return 'Рассмотрено'
   }
 }
+
+const formatDatetime = (date) => {
+  const datetime = DateTime.fromISO(date)
+  return datetime.toFormat('dd-MM-yyyy HH:mm')
+}
 </script>
 
 <template>
@@ -59,7 +65,7 @@ function status(rev_stat) {
       <div class="flex gap-2">
         <p class="ml-2 font-bold">Отзыв от</p>
         <div class="bg-[#E5ECFF] border-solid border-2 border-black rounded-lg px-2">
-          {{ ReviewData.review_creation_date }}
+          {{ formatDatetime(ReviewData.review_creation_date) }}
         </div>
       </div>
       <div class="flex gap-2 mr-2">

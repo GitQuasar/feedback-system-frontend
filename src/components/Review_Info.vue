@@ -1,5 +1,6 @@
 <script setup>
 import { inject } from 'vue'
+import { DateTime } from 'luxon'
 
 const emit = defineEmits(['openReview'])
 const {
@@ -60,7 +61,7 @@ function Rev(
   status,
   reply_text
 ) {
-  Rev_date.value = Date
+  Rev_date.value = formatDatetime(Date)
   Rev_text.value = Review_text
   Rev_firstname.value = firstname
   Rev_lastname.value = lastname
@@ -71,6 +72,10 @@ function Rev(
   Rev_status.value = status
   Rev_reply_text.value = reply_text
 }
+const formatDatetime = (date) => {
+  const datetime = DateTime.fromISO(date)
+  return datetime.toFormat('dd-MM-yyyy HH:mm')
+}
 </script>
 
 <template>
@@ -79,12 +84,14 @@ function Rev(
   >
     <div class="flex flex-row gap-8">
       <div class="item_review">
-        <p class="text-center min-w-[500px] max-w-[500px] truncate">
+        <p class="text-center min-w-[495px] max-w-[495px] truncate">
           {{ review_text }}
         </p>
       </div>
       <div class="item_review">
-        <p class="text-center min-w-[135px] max-w-[135px]">{{ date }}</p>
+        <p class="text-center min-w-[140px] max-w-[140px]">
+          {{ formatDatetime(date) }}
+        </p>
       </div>
       <div class="item_review">
         <p
