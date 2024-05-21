@@ -6,7 +6,8 @@ defineProps({
   last_name: String,
   admin: Boolean,
   manager: Boolean,
-  id: String
+  id: String,
+  is_active: Boolean
 })
 
 const Adm_id = ref('')
@@ -24,12 +25,34 @@ function role_staff(admin) {
   }
 }
 
-const delete_Staff = async (id) => {
+const ban_Staff = async (id) => {
+  const ban_staff = {
+    is_active: `${false}`
+  }
   try {
-    await axios.delete(`http://127.0.0.1:8000/api/admin/actions/delete_staff/${id}`, {
+    await axios.patch(`http://127.0.0.1:8000/api/admin/actions/update_staff/${id}`, ban_staff, {
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+  } catch (err) {
+    console.log(err)
+  } finally {
+    location.reload()
+  }
+}
+const unban_Staff = async (id) => {
+  const ban_staff = {
+    is_active: `${true}`
+  }
+  try {
+    await axios.patch(`http://127.0.0.1:8000/api/admin/actions/update_staff/${id}`, ban_staff, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
   } catch (err) {
@@ -53,6 +76,9 @@ const delete_Staff = async (id) => {
         </div>
       </div>
     </div>
+    <div v-if="!is_active" class="item_review_ban mt-8">
+      <p class="text-red-700 font-bold">Заблокирован</p>
+    </div>
     <div class="flex gap-14">
       <router-link to="/administrator/update_staff">
         <button
@@ -63,10 +89,18 @@ const delete_Staff = async (id) => {
         </button>
       </router-link>
       <button
-        @click="delete_Staff(id)"
+        v-if="is_active"
+        @click="ban_Staff(id)"
         class="item_review_button border-[#37383C] bg-[#37383C] text-center text-[#DADCFF] rounded-3xl transition hover:-translate-y-1 hover:shadow-xl"
       >
-        Удалить
+        Заблокировать
+      </button>
+      <button
+        v-else
+        @click="unban_Staff(id)"
+        class="item_review_button border-[#37383C] bg-[#37383C] text-center text-[#DADCFF] rounded-3xl transition hover:-translate-y-1 hover:shadow-xl"
+      >
+        Разблокировать
       </button>
     </div>
   </div>
@@ -82,6 +116,10 @@ const delete_Staff = async (id) => {
   font-size: 1rem;
   line-height: 1.75rem;
 }
+.item_review_ban {
+  font-size: 1.2rem;
+  max-height: 5rem;
+}
 
 .item_review_button {
   border-width: 1px;
@@ -89,8 +127,8 @@ const delete_Staff = async (id) => {
   place-self: center;
   place-items: center;
   place-content: center;
-  min-width: 12rem;
-  max-width: 12rem;
+  min-width: 14rem;
+  max-width: 14rem;
   font-size: 1.3rem;
 }
 </style>

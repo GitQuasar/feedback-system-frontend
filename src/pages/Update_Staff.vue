@@ -23,7 +23,7 @@ const UpdateInfo = async () => {
     password: `${password.value}`
   }
   try {
-    await axios.put(
+    await axios.patch(
       `http://127.0.0.1:8000/api/admin/actions/update_staff/${Adm_id.value}`,
       StaffData,
       {

@@ -1,6 +1,7 @@
 <script setup>
-import { inject, ref } from 'vue'
+import { inject, ref, onBeforeMount } from 'vue'
 import axios from 'axios'
+import images_check from './images_check.vue'
 
 const { closeReview } = inject('reviewActions')
 const {
@@ -13,11 +14,18 @@ const {
   Rev_email,
   Rev_uuid,
   Rev_status,
-  Rev_reply_text
+  Rev_reply_text,
+  Rev_images
 } = inject('reviewPage_Info')
 
 const reply = ref('')
-
+const images_array = []
+onBeforeMount(async () => {
+  for (let i = 0; i < Rev_images.value.length; i++) {
+    images_array.push('/images/' + Rev_images.value[i])
+  }
+  console.log(images_array)
+})
 const SendReply = async () => {
   try {
     const ReplyData = {
@@ -70,7 +78,7 @@ const SendReply = async () => {
         {{ Rev_text }}
       </p>
     </div>
-    <div class="flex justify-between">
+    <div class="flex gap-4">
       <div class="relative mt-2 border border-black rounded-3xl h-60 w-1/2 bg-[#F1F4FF] p-4">
         <textarea
           v-if="Rev_status == 'Created'"
@@ -82,12 +90,7 @@ const SendReply = async () => {
       </div>
       <div class="flex flex-col">
         <div class="flex flex-row gap-4 mt-4">
-          <img src="/download.svg" alt="download" class="w-16 h-16" />
-          <img src="/download.svg" alt="download" class="w-16 h-16" />
-          <img src="/download.svg" alt="download" class="w-16 h-16" />
-          <img src="/download.svg" alt="download" class="w-16 h-16" />
-          <img src="/download.svg" alt="download" class="w-16 h-16" />
-          <img src="/download.svg" alt="download" class="w-16 h-16" />
+          <images_check :array_image="images_array" />
         </div>
         <div v-if="Rev_firstname != null">
           <div class="flex flex-col border border-black rounded-3xl bg-[#F1F4FF] p-4 mt-4">

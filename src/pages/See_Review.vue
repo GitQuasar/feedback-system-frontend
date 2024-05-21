@@ -1,17 +1,23 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { DateTime } from 'luxon'
 import Header_Review from '../components/Header_Review.vue'
 import Footer from '../components/Footer.vue'
 import axios from 'axios'
+import lmao from '../components/images_check.vue'
 
 const uuid = defineProps({
   uuid: String
 })
-
+const IMAGESS = async () => {
+  for (let i = 0; i < ReviewData.value.images.filenames.length; i++) {
+    images_see.push('/images/' + ReviewData.value.images.filenames[i])
+  }
+}
 const ReviewData = ref([])
-
-onMounted(async () => {
+const images_see = []
+const check_im = ref(false)
+onBeforeMount(async () => {
   try {
     console.log(uuid)
     const { data } = await axios.get(
@@ -23,6 +29,8 @@ onMounted(async () => {
       }
     )
     ReviewData.value = data
+    IMAGESS()
+    check_im.value = true
   } catch (err) {
     console.log(err)
   }
@@ -81,17 +89,25 @@ const formatDatetime = (date) => {
         {{ ReviewData.review_text }}
       </p>
     </div>
+    <div v-if="check_im" class="flex flex-row mt-8 ml-8 gap-8">
+      <lmao :array_image="images_see" class="" />
+    </div>
   </div>
   <br />
 
   <div
+    v-if="ReviewData.manager_reply_text"
     class="bg-[#F1F4FF] w-[1050px] h-[324px] ml-[320px] p-4 rounded-[55px] border border-black my-10"
   >
     <div class="flex justify-between">
       <div class="flex gap-2">
         <p class="ml-2 font-bold">Ответ от</p>
         <div class="bg-[#E5ECFF] border-solid border-2 border-black rounded-lg px-2">
-          {{ ReviewData.manager_reply_datetime }}
+          {{
+            ReviewData.manager_reply_datetime
+              ? formatDatetime(ReviewData.manager_reply_datetime)
+              : ''
+          }}
         </div>
       </div>
       <div class="flex gap-2 mr-2">

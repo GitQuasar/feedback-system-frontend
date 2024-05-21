@@ -57,7 +57,7 @@ const login = async () => {
   <p class="text-[#37383C] text-[64px] text-center font-[700] my-[150px]">Авторизация</p>
   <input
     v-model="username"
-    placeholder="Логин"
+    placeholder="Email"
     class="bg-[#F1F4FF] ml-[541px] -my-[50px] w-[446px] h-[68px] text-[32px] font-[100] rounded-lg indent-4"
   />
   <input

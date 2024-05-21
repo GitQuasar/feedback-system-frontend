@@ -13,7 +13,8 @@ const {
   Rev_email,
   Rev_uuid,
   Rev_status,
-  Rev_reply_text
+  Rev_reply_text,
+  Rev_images
 } = inject('reviewPage_Info')
 
 defineProps({
@@ -26,7 +27,8 @@ defineProps({
   department: String,
   email: String,
   uuid: String,
-  reply_text: String
+  reply_text: String,
+  images: Array
 })
 
 function Status_Text(Status) {
@@ -59,7 +61,8 @@ function Rev(
   email,
   uuid,
   status,
-  reply_text
+  reply_text,
+  images
 ) {
   Rev_date.value = formatDatetime(Date)
   Rev_text.value = Review_text
@@ -71,6 +74,7 @@ function Rev(
   Rev_uuid.value = uuid
   Rev_status.value = status
   Rev_reply_text.value = reply_text
+  Rev_images.value = images
 }
 const formatDatetime = (date) => {
   const datetime = DateTime.fromISO(date)
@@ -115,7 +119,8 @@ const formatDatetime = (date) => {
             email,
             uuid,
             status,
-            reply_text
+            reply_text,
+            images
           ),
             emit('openReview')
         "

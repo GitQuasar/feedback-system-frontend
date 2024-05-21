@@ -31,6 +31,7 @@ const Rev_email = ref('')
 const Rev_uuid = ref('')
 const Rev_status = ref('')
 const Rev_reply_text = ref('')
+const Rev_images = ref([])
 
 provide('reviewPage_Info', {
   Rev_text,
@@ -42,7 +43,8 @@ provide('reviewPage_Info', {
   Rev_email,
   Rev_uuid,
   Rev_status,
-  Rev_reply_text
+  Rev_reply_text,
+  Rev_images
 })
 
 provide('reviewActions', { openReview, closeReview })
@@ -136,6 +138,7 @@ const pagesCount = computed(() => {
     :email="item.email"
     :reply_text="item.manager_reply_text"
     :department="item.department"
+    :images="item.images.filenames"
     @open-review="openReview"
   />
   <Paginate

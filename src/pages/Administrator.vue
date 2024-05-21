@@ -31,15 +31,12 @@ const items = ref([])
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get(
-      'http://127.0.0.1:8000/api/admin/actions/read_staff?is_admin=true&is_manager=false',
-      {
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+    const { data } = await axios.get('http://127.0.0.1:8000/api/admin/actions/read_staff/', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
-    )
+    })
     items.value = data
   } catch (err) {
     console.log(err)
@@ -63,6 +60,7 @@ onMounted(async () => {
     :last_name="item.last_name"
     :admin="item.is_admin"
     :manager="item.is_manager"
+    :is_active="item.is_active"
   />
   <div class="flex justify-center p-5">
     <router-link to="/administrator/add_staff">
