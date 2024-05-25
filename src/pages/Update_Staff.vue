@@ -20,7 +20,8 @@ const UpdateInfo = async () => {
     first_name: `${first_name.value}`,
     last_name: `${last_name.value}`,
     patronymic: `${patronymic.value}`,
-    password: `${password.value}`
+    password: `${password.value}`,
+    is_active: `${true}`
   }
   try {
     await axios.patch(
