@@ -71,7 +71,7 @@ onMounted(async () => {
       </button>
     </router-link>
   </div>
-  <Footer />
+  <Footer class="mt-[50px]" />
 </template>
 
 <style scoped></style>

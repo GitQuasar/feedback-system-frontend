@@ -92,7 +92,7 @@ onMounted(async () => {
 })
 
 const page = ref(1)
-const pagination_items_on_page = ref(6)
+const pagination_items_on_page = ref(20)
 const pagination_offset = ref(0)
 const pagination_items_total = ref()
 const changePage = async (page_num) => {
@@ -153,7 +153,7 @@ const pagesCount = computed(() => {
     :page-class="'page-item'"
   />
 
-  <Footer />
+  <Footer class="mt-[149px]" />
 </template>
 
 <style>

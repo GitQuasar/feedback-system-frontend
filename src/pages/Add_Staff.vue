@@ -53,56 +53,54 @@ const Add_Staff = async () => {
     <Header />
   </div>
 
-  <div class="py-8">
-    <div class="bg-[#FBFDFF] w-[974px] m-auto my-4 h-[900px] rounded-[55px] border">
-      <div class="text-[#000000] text-[29px] my-[20px] mx-[40px]" style="font-style: italic">
-        <b>Новый сотрудник:</b>
-        <br />
-        <br />
-        <input
-          v-model="last_name"
-          placeholder="Фамилия"
-          class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[60px] my-4 m-auto rounded-lg indent-4"
-        />
-        <input
-          v-model="first_name"
-          placeholder="Имя"
-          class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[60px] my-4 rounded-lg indent-4"
-        />
-        <input
-          v-model="patronymic"
-          placeholder="Отчество"
-          class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[60px] my-4 rounded-lg indent-4"
-        />
-        <div>
-          <select
-            v-model="role"
-            class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[60px] my-4 rounded-lg indent-4"
-          >
-            <option>Менеджер</option>
-            <option>Администратор</option>
-          </select>
-        </div>
-        <input
-          v-model="email"
-          placeholder="Email"
-          class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[60px] my-4 rounded-lg indent-4"
-        />
-        <input
-          v-model="password"
-          placeholder="Пароль"
-          class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[60px] my-4 rounded-lg indent-4"
-        />
+  <div class="bg-[#FBFDFF] mt-5 w-[700px] m-auto my-4 h-auto rounded-[55px] border">
+    <div class="text-[#000000] text-[29px] my-[20px] mx-[40px]" style="font-style: italic">
+      <b>Новый сотрудник:</b>
+      <br />
+      <br />
+      <input
+        v-model="last_name"
+        placeholder="Фамилия"
+        class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[100px] my-4 m-auto rounded-lg indent-4"
+      />
+      <input
+        v-model="first_name"
+        placeholder="Имя"
+        class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[100px] my-4 rounded-lg indent-4"
+      />
+      <input
+        v-model="patronymic"
+        placeholder="Отчество"
+        class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[100px] my-4 rounded-lg indent-4"
+      />
+      <div>
+        <select
+          v-model="role"
+          class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[100px] my-4 rounded-lg indent-4"
+        >
+          <option>Менеджер</option>
+          <option>Администратор</option>
+        </select>
       </div>
-      <br />
-      <button
-        @click="Add_Staff"
-        class="bg-[#37383C] w-[250px] h-[52px] ml-[350px] mb-[100px] rounded-lg text-[#DADCFF] transition hover:-translate-y-1 hover:shadow-xl"
-      >
-        Добавить нового сотрудника
-      </button>
-      <br />
+      <input
+        v-model="email"
+        placeholder="Email"
+        class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[100px] my-4 rounded-lg indent-4"
+      />
+      <input
+        v-model="password"
+        placeholder="Пароль"
+        class="bg-[#E3E9FF] w-[411px] h-[50px] ml-[100px] my-4 rounded-lg indent-4"
+      />
     </div>
+    <br />
+    <button
+      @click="Add_Staff"
+      class="bg-[#37383C] w-[250px] h-[52px] ml-[225px] mb-5 rounded-lg text-[#DADCFF] transition hover:-translate-y-1 hover:shadow-xl"
+    >
+      Добавить нового сотрудника
+    </button>
+    <br />
   </div>
   <br />
   <div>

@@ -11,8 +11,8 @@ const checked = ref(false)
 
 // const imagePreview = ref('')
 const images = ref([])
-const containerHeight = ref(375) // начальная высота контейнера
-const containerHeight1 = ref(444)
+const containerHeight = ref(231) // начальная высота контейнера
+const containerHeight1 = ref(269)
 const up_images = new FormData()
 const handleFileInputChange = (event) => {
   const files = event.target.files
@@ -27,8 +27,8 @@ const handleFileInputChange = (event) => {
     }
     reader.readAsDataURL(files[i])
   }
-  containerHeight1.value = 529
-  containerHeight.value = 460
+  containerHeight1.value = 310
+  containerHeight.value = 275
 }
 const deleteImage = (index) => {
   images.value.splice(index, 1)
@@ -87,18 +87,18 @@ const send_rewiew = async () => {
     <Start_text />
   </div>
 
-  <div class="text-[#37383C] centered-text leading-[200px]">
-    <b class="text-[58px]">Оставить отзыв</b>
+  <div class="text-[#37383C] centered-text mt-10">
+    <b class="text-4xl">Оставить отзыв</b>
   </div>
 
-  <div>
+  <div class="flex place-content-center gap-2 mt-5">
     <input
       type="checkbox"
       id="checkbox"
       v-model="checked"
-      class="bg-[#D9D9D9] w-[30px] h-[30px] ml-[678px] border-0 -my-8"
+      class="bg-[#D9D9D9] w-[30px] h-[30px] border-0"
     />
-    <div for="checkbox" class="ml-[725px] -my-[37px] text-[24px]">НЕанонимно</div>
+    <div for="checkbox" class="text-[24px]">НЕанонимно</div>
   </div>
   <br />
   <div v-if="checked" class="ml-8 text-[24px]">
@@ -132,20 +132,20 @@ const send_rewiew = async () => {
   </div>
 
   <div
-    class="bg-[#F1F4FF] w-[974px] m-auto my-8 h-[444px] rounded-[55px] border border-black"
+    class="bg-[#F1F4FF] w-[974px] m-auto my-8 h-[269px] rounded-[55px] border border-black"
     :style="{ height: containerHeight1 + 'px' }"
   >
     <div
-      class="relative bg-white w-[902px] m-auto my-8 h-[375px] border-dashed border-black border"
+      class="relative bg-white w-[902px] m-auto my-8 mt-5 h-[231px] border-dashed border-black border"
       :style="{ height: containerHeight + 'px' }"
     >
       <div
-        class="relative bg-white w-[901px] h-[334px] border-b border-r border-dashed border-black"
+        class="relative bg-white w-[901px] h-[190px] border-b border-r border-dashed border-black"
       >
         <textarea
           v-model="review_text"
           placeholder="Введите текст"
-          class="w-[880px] h-[310px] indent-6 ml-2 my-3 text-lg resize-none"
+          class="w-[880px] h-[166px] indent-6 ml-2 my-3 text-lg resize-none"
         ></textarea>
       </div>
       <div>
@@ -161,14 +161,14 @@ const send_rewiew = async () => {
           <img
             :src="img"
             alt="Preview"
-            class="w-[115px] h-[115px] rounded-[20px] -my-[35px] ml-[20px]"
+            class="w-[75px] h-[75px] rounded-[20px] -my-[35px] ml-[20px]"
           />
           <span class="delete-icon" @click="deleteImage(index)">×</span>
         </div>
       </div>
     </div>
-    <p class="text-slate-400 ml-10 mt-4">
-      *Количество файлов не должно привышать 6. Размер одного файла не должен привышать 4МБ.
+    <p class="text-slate-400 ml-10">
+      *Количество файлов не должно превышать 6. Размер одного файла не должен превышать 4МБ.
       Поддерживаемые типы файлов: PNG, jpg, jpeg
     </p>
   </div>
@@ -178,7 +178,7 @@ const send_rewiew = async () => {
   <br />
   <button
     @click="send_rewiew"
-    class="bg-[#37383C] w-[200px] h-[52px] ml-[680px] rounded-lg text-[#D0DAFC] transition hover:-translate-y-1 hover:shadow-xl"
+    class="bg-[#37383C] w-[200px] mt-4 h-[52px] ml-[680px] rounded-lg text-[#D0DAFC] transition hover:-translate-y-1 hover:shadow-xl"
   >
     Отправить
   </button>
