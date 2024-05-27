@@ -70,6 +70,24 @@ const send_rewiew = async () => {
     router.push('/qr')
   }
 }
+
+const download_instruction = async () => {
+  try {
+    await axios.get(
+      'http://127.0.0.1:8000/api/reviewer/download/instruction',
+      {
+        responseType: 'blob'
+      },
+      {
+        headers: {
+          Accept: 'application/json'
+        }
+      }
+    )
+  } catch (err) {
+    console.log(err)
+  }
+}
 </script>
 
 <template>
@@ -77,6 +95,7 @@ const send_rewiew = async () => {
     <Header_Review />
     <div dir="rtl">
       <button
+        @click="download_instruction"
         class="flex bg-[#F1F4FF] border border-[#37383C] ml-10 mt-6 ms-[58px] text-xl rounded-lg px-5 py-2 transition hover:-translate-y-1 hover:shadow-xl"
       >
         ?
