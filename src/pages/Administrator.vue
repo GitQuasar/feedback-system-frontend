@@ -4,8 +4,8 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
-import FLName from '../components/FLName.vue'
 import Staff_table from '../components/Staff_table.vue'
+import FLName_admin from '../components/FLName_admin.vue'
 
 const admin_info = ref([])
 const admin_firstname = ref('')
@@ -46,7 +46,7 @@ onMounted(async () => {
 
 <template>
   <Header />
-  <FLName :name="admin_firstname" :lastname="admin_lastname" />
+  <FLName_admin :name="admin_firstname" :lastname="admin_lastname" />
   <div class="text-[#37383C] text-[50px] text-center mt-[50px] mb-[50px]">
     <b class="ml-[95px] text-[#37383C] text-center thins-text">
       Список менеджеров и администраторов

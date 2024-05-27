@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 import Header from '../components/Header.vue'
-import FLName from '../components/FLName.vue'
+import FLName_manager from '../components/FLName_manager.vue'
 import Table_Header from '../components/Table_Header.vue'
 import Review_Info from '../components/Review_Info.vue'
 import Footer from '../components/Footer.vue'
@@ -123,7 +123,7 @@ const pagesCount = computed(() => {
 <template>
   <Review_page v-if="reviewOpen" />
   <Header />
-  <FLName :name="manager_firstname" :lastname="manager_lastname" />
+  <FLName_manager :name="manager_firstname" :lastname="manager_lastname" />
   <Table_Header />
   <Review_Info
     v-for="item in items"

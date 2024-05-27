@@ -73,17 +73,16 @@ const send_rewiew = async () => {
 
 const download_instruction = async () => {
   try {
-    await axios.get(
-      'http://127.0.0.1:8000/api/reviewer/download/instruction',
-      {
-        responseType: 'blob'
-      },
-      {
-        headers: {
-          Accept: 'application/json'
-        }
-      }
-    )
+    axios
+      .get('http://127.0.0.1:8000/api/reviewer/download/instruction', { responseType: 'blob' })
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = 'инструкция_для_заявителя.pdf'
+        link.click()
+        URL.revokeObjectURL(link.href)
+      })
   } catch (err) {
     console.log(err)
   }
