@@ -27,6 +27,10 @@ onBeforeMount(async () => {
   console.log(images_array)
 })
 const SendReply = async () => {
+  if (reply.value.length < 16) {
+    alert('Текст ответа должен содержать не менее 16 символов')
+    return
+  }
   try {
     const ReplyData = {
       reply_text: reply.value,

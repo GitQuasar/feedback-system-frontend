@@ -43,6 +43,10 @@ const department = ref('')
 const link_uuid = ref('')
 const router = useRouter()
 const send_rewiew = async () => {
+  if (review_text.value.length < 8) {
+    alert('Текст отзыва должен содержать не менее 8 символов')
+    return
+  }
   const reviewData = new FormData()
   reviewData.append('review_text', review_text.value)
   reviewData.append('email', email.value)
@@ -64,10 +68,13 @@ const send_rewiew = async () => {
     )
     localStorage.setItem('link_info', link_uuid.value.data.review_uuid)
     localStorage.setItem('QR_base64', link_uuid.value.data.image_base64_bytes)
+    router.push('/qr')
   } catch (err) {
     console.log(err)
-  } finally {
-    router.push('/qr')
+    alert(
+      'Произошла ошибка при создании отзыва! Были введены некорректные данные! Попробуйте ещё раз!'
+    )
+    return
   }
 }
 
@@ -170,7 +177,12 @@ const download_instruction = async () => {
         <label for="file-input">
           <img src="/clip.svg" alt="Clip" class="w-[41px] h-[41px] -my-[2px]" />
         </label>
-        <input id="file-input" type="file" @change="handleFileInputChange" />
+        <input
+          id="file-input"
+          type="file"
+          accept=".jpg, .jpeg, .png"
+          @change="handleFileInputChange"
+        />
       </div>
 
       <p v-if="images.length === 0" class="text-[#787A7D] ml-[50px] -my-[36px]">Прикрепить фото</p>

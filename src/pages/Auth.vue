@@ -30,6 +30,8 @@ const login = async () => {
     role.value = data.role
   } catch (err) {
     console.log(err)
+    showError.value = true
+    return
   } finally {
     if (role.value == 'Manager') {
       router.push(`/manager`)
@@ -72,7 +74,7 @@ const login = async () => {
     </div>
   </div>
 
-  <p v-if="showError" class="text-red-600 font-bold ml-[550px]">
+  <p v-if="showError" class="text-red-600 font-bold mt-4 ml-[550px]">
     Ошибка авторизации! Неверный логин или пароль!
   </p>
   <button
