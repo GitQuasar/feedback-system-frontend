@@ -43,31 +43,22 @@ const Add_Staff = async () => {
     router.push('/administrator')
   } catch (err) {
     console.log(err)
-    if (
-      first_name.value.length != 0 &&
-      (first_name.value.length < 2 || first_name.value.length > 32)
-    ) {
+    if (first_name.value.length < 2 || first_name.value.length > 32) {
       alert('Имя должно содержать не менее 2 и не более 32 символов')
     }
-    if (
-      last_name.value.length != 0 &&
-      (last_name.value.length < 2 || last_name.value.length > 32)
-    ) {
+    if (last_name.value.length < 2 || last_name.value.length > 32) {
       alert('Фамилия должна содержать не менее 2 и не более 32 символов')
     }
-    if (
-      patronymic.value.length != 0 &&
-      (patronymic.value.length < 2 || patronymic.value.length > 32)
-    ) {
+    if (patronymic.value.length < 2 || patronymic.value.length > 32) {
       alert('Отчество должно содержать не менее 2 и не более 32 символов')
     }
     if (role_Staff.value == '') {
       alert('Выберите роль')
     }
-    if (password.value.length != 0 && (password.value.length < 8 || password.value.length > 32)) {
+    if (password.value.length < 8 || password.value.length > 32) {
       alert('Пароль должен содержать не менее 8 и не более 32 символов')
     }
-    if (email.value.length != 0 && (!email.value.includes('@') || !email.value.includes('.'))) {
+    if (email.value.length == 0 || !email.value.includes('@') || !email.value.includes('.')) {
       alert('Некорректная почта')
     }
     return

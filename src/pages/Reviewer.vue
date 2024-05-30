@@ -16,11 +16,20 @@ const containerHeight1 = ref(269)
 const up_images = new FormData()
 const handleFileInputChange = (event) => {
   const files = event.target.files
-
+  console.log(files)
+  console.log(files[0].size)
+  if (files[0].size > 4 * 1024 * 1024) {
+    alert('Размер изображения не должен превышать 4 МБ')
+    return
+  }
   for (let i = 0; i < files.length; i++) {
     const cnt = ref(0)
     for (var key of up_images.keys()) {
       cnt.value = cnt.value + 1
+      if (cnt.value === 6) {
+        alert('Можно загрузить не более 6 изображений')
+        return
+      }
     }
     up_images.append('file' + cnt.value, files[i])
     const reader = new FileReader()
@@ -39,6 +48,10 @@ const deleteImage = (index) => {
   images.value.splice(index, 1)
   up_images.delete('file' + index)
   console.log(up_images)
+  if (images.value.length === 0) {
+    containerHeight1.value = 269
+    containerHeight.value = 231
+  }
 }
 
 const review_text = ref('')
