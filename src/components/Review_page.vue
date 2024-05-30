@@ -24,7 +24,6 @@ onBeforeMount(async () => {
   for (let i = 0; i < Rev_images.value.length; i++) {
     images_array.push('/images/' + Rev_images.value[i])
   }
-  console.log(images_array)
 })
 const SendReply = async () => {
   if (reply.value.length < 16) {

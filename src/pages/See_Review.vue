@@ -20,7 +20,6 @@ const check_im = ref(false)
 const reply_exsist = ref(true)
 onBeforeMount(async () => {
   try {
-    console.log(uuid)
     const { data } = await axios.get(
       `http://127.0.0.1:8000/api/reviews/actions/see_review/{id}?uuid=${uuid.uuid}`,
       {

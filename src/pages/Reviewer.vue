@@ -5,6 +5,7 @@ import Footer from '../components/Footer.vue'
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { CssSyntaxError } from 'postcss'
 
 const checked = ref(false)
 // const showModal = ref(false)
@@ -16,8 +17,6 @@ const containerHeight1 = ref(269)
 const up_images = new FormData()
 const handleFileInputChange = (event) => {
   const files = event.target.files
-  console.log(files)
-  console.log(files[0].size)
   if (files[0].size > 4 * 1024 * 1024) {
     alert('Размер изображения не должен превышать 4 МБ')
     return
@@ -44,10 +43,24 @@ const handleFileInputChange = (event) => {
   containerHeight.value = 275
 }
 const deleteImage = (index) => {
-  console.log(up_images)
   images.value.splice(index, 1)
   up_images.delete('file' + index)
-  console.log(up_images)
+  let tempData = new FormData()
+  let cnter = ref(0)
+  for (let pair of up_images.entries()) {
+    let newKey = 'file' + cnter.value
+    cnter.value = cnter.value + 1
+    tempData.append(newKey, pair[1])
+  }
+  for (let key of up_images.keys()) {
+    up_images.delete(key)
+  }
+  for (let key of up_images.keys()) {
+    up_images.delete(key)
+  }
+  for (let pair of tempData.entries()) {
+    up_images.append(pair[0], pair[1])
+  }
   if (images.value.length === 0) {
     containerHeight1.value = 269
     containerHeight.value = 231

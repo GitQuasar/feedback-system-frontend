@@ -19,7 +19,7 @@ function open() {
       @click="image_fiew = false"
       class="fixed cursor-pointer top-0 left-0 h-full w-full bg-black opacity-70 z-30"
     ></div>
-    <div class="fixed i_p w-3/5 border border-black z-40">
+    <div class="fixed i_p border border-black z-40">
       <img :src="image" class="" />
     </div>
   </div>
@@ -38,7 +38,6 @@ function open() {
   border-radius: 0.75rem;
 }
 .i_p {
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
