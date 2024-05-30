@@ -51,22 +51,58 @@ provide('reviewActions', { openReview, closeReview })
 
 const items = ref([])
 
-onMounted(async () => {
+const search_reviews = ref('')
+
+const sorted_status = ref(false)
+
+const sort_by_status = async () => {
+  sorted_status.value = !sorted_status.value
   try {
-    const { data } = await axios.get(
-      'http://127.0.0.1:8000/api/manager/actions/see_reviews?page=1',
-      {
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+    const { data } = await axios.get('http://127.0.0.1:8000/api/manager/actions/see_reviews', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
-    )
+    })
+    if (sorted_status.value) {
+      data.sort(function (a, b) {
+        if (a.review_status < b.review_status) return -1
+        if (a.review_status > b.review_status) return 1
+        return 0
+      })
+    }
     localStorage.setItem('reviews', JSON.stringify(data))
     pagination_items_total.value = JSON.parse(localStorage.getItem('reviews')).length
     changePage(page.value)
   } catch (err) {
     console.log(err)
+  }
+}
+
+onMounted(async () => {
+  if (search_reviews.value === '') {
+    try {
+      const { data } = await axios.get('http://127.0.0.1:8000/api/manager/actions/see_reviews', {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      if (sorted_status.value) {
+        data.sort(function (a, b) {
+          if (a.review_status < b.review_status) return -1
+          if (a.review_status > b.review_status) return 1
+          return 0
+        })
+      }
+      localStorage.setItem('reviews', JSON.stringify(data))
+      pagination_items_total.value = JSON.parse(localStorage.getItem('reviews')).length
+      changePage(page.value)
+    } catch (err) {
+      console.log(err)
+    }
+  } else {
+    search(search_reviews.value)
   }
 })
 
@@ -90,6 +126,25 @@ onMounted(async () => {
     console.log(err)
   }
 })
+
+const search = async (search_text) => {
+  try {
+    const { data } = await axios.get(
+      `http://127.0.0.1:8000/api/manager/actions/search_in_reviews/?search_text=${search_text}`,
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+    )
+    localStorage.setItem('reviews', JSON.stringify(data))
+    pagination_items_total.value = JSON.parse(localStorage.getItem('reviews')).length
+    changePage(page.value)
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 const page = ref(1)
 const pagination_items_on_page = ref(20)
@@ -125,6 +180,31 @@ const pagesCount = computed(() => {
   <Header />
   <FLName_manager :name="manager_firstname" :lastname="manager_lastname" />
   <Table_Header />
+  <div class="flex justify-between">
+    <div class="flex flex-row">
+      <input
+        v-model="search_reviews"
+        placeholder="Поиск"
+        class="w-[250px] h-[50px] border-solid border-2 border-[#37383C] ml-[150px] rounded-lg px-5 py-2 text-[#37383C] text-center thins-text"
+      />
+      <button
+        class="bg-[#F1F4FF] border-solid border-2 border-[#37383C] rounded-lg transition hover:-translate-y-1 hover:shadow-xl ml-2"
+        @click="search(search_reviews)"
+      >
+        <img src="/search.svg" alt="search" />
+      </button>
+    </div>
+    <div class="flex gap-2 mr-[200px]">
+      <p class="text-sm mt-3">Сначала не рассмотренные</p>
+      <button
+        @click="sort_by_status"
+        class="bg-[#F1F4FF] rounded-lg transition hover:-translate-y-1 hover:shadow-xl"
+      >
+        <img src="/arrows.svg" alt="arrows" />
+      </button>
+    </div>
+  </div>
+
   <Review_Info
     v-for="item in items"
     :key="item.uuid"
