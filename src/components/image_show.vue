@@ -38,6 +38,7 @@ function open() {
   border-radius: 0.75rem;
 }
 .i_p {
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

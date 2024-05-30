@@ -188,7 +188,7 @@ const pagesCount = computed(() => {
         class="w-[250px] h-[50px] border-solid border-2 border-[#37383C] ml-[150px] rounded-lg px-5 py-2 text-[#37383C] text-center thins-text"
       />
       <button
-        class="bg-[#F1F4FF] border-solid border-2 border-[#37383C] rounded-lg transition hover:-translate-y-1 hover:shadow-xl ml-2"
+        class="h-[40px] mt-1 bg-[#F1F4FF] border-solid border-2 border-[#37383C] rounded-lg transition hover:-translate-y-1 hover:shadow-xl ml-2"
         @click="search(search_reviews)"
       >
         <img src="/search.svg" alt="search" />
@@ -198,7 +198,7 @@ const pagesCount = computed(() => {
       <p class="text-sm mt-3">Сначала не рассмотренные</p>
       <button
         @click="sort_by_status"
-        class="bg-[#F1F4FF] rounded-lg transition hover:-translate-y-1 hover:shadow-xl"
+        class="h-[40px] mt-1 bg-[#F1F4FF] rounded-lg transition hover:-translate-y-1 hover:shadow-xl"
       >
         <img src="/arrows.svg" alt="arrows" />
       </button>
