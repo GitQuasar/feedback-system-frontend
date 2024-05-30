@@ -18,7 +18,11 @@ const handleFileInputChange = (event) => {
   const files = event.target.files
 
   for (let i = 0; i < files.length; i++) {
-    up_images.append('file', files[i])
+    const cnt = ref(0)
+    for (var key of up_images.keys()) {
+      cnt.value = cnt.value + 1
+    }
+    up_images.append('file' + cnt.value, files[i])
     const reader = new FileReader()
     reader.onload = () => {
       // Устанавливаем миниатюру и увеличиваем высоту контейнера
@@ -31,7 +35,10 @@ const handleFileInputChange = (event) => {
   containerHeight.value = 275
 }
 const deleteImage = (index) => {
+  console.log(up_images)
   images.value.splice(index, 1)
+  up_images.delete('file' + index)
+  console.log(up_images)
 }
 
 const review_text = ref('')
